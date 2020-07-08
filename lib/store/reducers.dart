@@ -19,7 +19,6 @@ final appStateReducer = combineReducers<JiaYuState>(
       return state;
     }),
     TypedReducer<JiaYuState, AppInitAction>((state, action) {
-      print(action);
       return state;
     }),
     TypedReducer<JiaYuState, HomeIndexSwitchAction>((state, action) {
