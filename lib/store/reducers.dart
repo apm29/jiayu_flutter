@@ -9,6 +9,7 @@ import 'package:flutter_scaffold/store/stores.dart';
 ///
 JiaYuState appReducer(JiaYuState state, action) {
   return appStateReducer(state, action)
+    ..dashboardModel = dashboardModalReducer(state.dashboardModel, action)
     ..loading = loadingReducer(state.loading, action);
 }
 
@@ -22,11 +23,17 @@ final appStateReducer = combineReducers<JiaYuState>(
       return state;
     }),
     TypedReducer<JiaYuState, HomeIndexSwitchAction>((state, action) {
-      print(action.index);
       return state..homePageIndex = action.index;
     }),
   ],
 );
-final loadingReducer = combineReducers<int>([
-
+final loadingReducer = combineReducers<int>([]);
+final dashboardModalReducer = combineReducers<DashboardModel>([
+  TypedReducer<DashboardModel, DashboardLoadAction>((state, action) {
+    state.loadPagedDate(action.refresh, action.context);
+    return state;
+  }),
+  TypedReducer<DashboardModel, DashboardLoadCompleteAction>((state, action) {
+    return state;
+  }),
 ]);

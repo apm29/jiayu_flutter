@@ -8,7 +8,6 @@ import 'package:flutter_scaffold/store/actions.dart';
 import 'package:flutter_scaffold/store/stores.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
-import 'package:flutter_scaffold/api/Api.dart';
 import 'dart:math' as math;
 
 ///
@@ -87,7 +86,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    print("JiaYu  didChangeAppLifecycleState: $state");
+    print("JiaYu didChangeAppLifecycleState: $state");
   }
 
   ///当前系统改变了一些访问性活动的回调
@@ -161,7 +160,7 @@ StoreConnector<JiaYuState, int> buildBottomNavigationBar(BuildContext context) {
         margin: EdgeInsets.symmetric(horizontal: marginHorizontal),
         child: BottomAppBar(
           elevation: 12,
-          //shape: CircularNotchedRectangleWithMargin(marginHorizontal),
+          shape: CircularNotchedRectangleWithMargin(marginHorizontal),
           clipBehavior: Clip.antiAlias,
           child: BottomNavigationBar(
             currentIndex: index,
@@ -197,6 +196,9 @@ class CircularNotchedRectangleWithMargin extends NotchedShape {
 
   @override
   Path getOuterPath(Rect oldHost, Rect oldGuest) {
+    if(oldGuest == null){
+      return Path()..addRect(oldHost);
+    }
     Rect host = Rect.fromLTWH(
         oldHost.left + margin, 0, oldHost.width - 2 * margin, oldHost.height);
     Rect guest = Rect.fromLTRB(oldGuest.left - margin, oldGuest.top,
