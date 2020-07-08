@@ -1,6 +1,6 @@
-# jiayu_flutter
+# flutter_scaffold
 
-A new Flutter project.
+A Flutter Basic Structure.
 
 ## Getting Started
 
