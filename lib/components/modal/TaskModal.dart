@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TaskModal<T> extends ModalRoute<T> {
   /// use [AsyncVoidTask] or [AsyncResultTask]
   final Function task;
-  final minimumLoadingTime = 2800;
+  final minimumLoadingTime = 800;
 
   TaskModal(this.task);
 

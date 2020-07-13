@@ -24,9 +24,8 @@ class _LoadMoreListenerState extends State<LoadMoreListener> {
   @override
   void initState() {
     super.initState();
-    //事件节流
     _controller.stream
-        .throttle((_) => TimerStream(true, Duration(milliseconds: 600)))
+        .debounceTime(Duration(milliseconds: 200))
         .listen((event) => widget.onLoadMore?.call());
   }
 

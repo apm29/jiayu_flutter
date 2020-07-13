@@ -24,15 +24,8 @@ initApp(Store<JiaYuState> store, action, NextDispatcher next) {}
 loadDashBoard(
     Store<JiaYuState> store, DashboardLoadAction action, NextDispatcher next) {
   return () async {
-    print(action);
-    bool loaded = await TaskModal.runTask(action.context, () async {
-      return await store.state.dashboardModel.loadPagedData(action.refresh);
-    });
-    print(loaded);
-    //await store.state.dashboardModel.loadPagedData(action.refresh);
-    if(loaded) {
-      next(action);
-    }
+    await store.state.dashboardModel.loadPagedData(action.refresh,action.context);
+    next(action);
   }();
 }
 
