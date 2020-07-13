@@ -1,15 +1,14 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_scaffold/api/Api.dart';
 import 'package:flutter_scaffold/model/BaseResp.dart';
 import 'package:flutter_scaffold/model/MallGoods.dart';
 import 'package:flutter_scaffold/model/PageData.dart';
 import 'package:flutter_scaffold/storage/LocalCache.dart';
-import 'package:flutter_scaffold/store/actions.dart';
+import 'package:flutter_scaffold/store/middlewares.dart';
 import 'package:flutter_scaffold/store/reducers.dart';
-import 'package:redux/redux.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
 
 ///
@@ -20,7 +19,7 @@ import 'package:redux_dev_tools/redux_dev_tools.dart';
 final DevToolsStore<JiaYuState> store = DevToolsStore<JiaYuState>(
   appReducer,
   initialState: JiaYuState(),
-  middleware: <Middleware<JiaYuState>>[],
+  middleware: createAppMiddleware(),
 );
 
 class JiaYuState {
@@ -37,37 +36,59 @@ class JiaYuState {
   JiaYuState() : this.locale = Locale(LocalCache().locale ?? 'zh');
 }
 
+enum ListState { Loading, NoMore, HasMore }
+
 class DashboardModel {
   List<MallGoods> goodsList = [];
   bool hasMore = true;
   bool loading = false;
-  int total = 0;
+  int _total = 0;
+  int _page = 1;
+  int _rows = 2;
+
+  ListState get listState => getListState(hasMore, loading);
+
+  getListState(bool hasMore, bool loading) {
+    if (loading) {
+      return ListState.Loading;
+    } else if (hasMore) {
+      return ListState.HasMore;
+    } else {
+      return ListState.NoMore;
+    }
+  }
 
   DashboardModel();
 
-  void loadPagedDate(bool refresh, BuildContext context) async {
+  Future<void> loadPagedData(bool refresh) async {
     if (refresh) {
       this.goodsList = [];
       this.hasMore = true;
       this.loading = false;
-      this.total = 0;
+      this._total = 0;
+      this._page = 1;
     }
     if (!this.loading && this.hasMore) {
       try {
         this.loading = true;
-        BaseResp<PageDate<MallGoods>> resp = await Api.getGoodsList();
+        BaseResp<PageData<MallGoods>> resp = await Api.getGoodsList({
+          "pageNo": this._page,
+          "pageSize": this._rows,
+        });
         if (resp.success) {
           this.goodsList.addAll(resp.data.records);
-          this.total = resp.data.total;
-          this.hasMore = this.total > this.goodsList.length;
+          this._total = resp.data.total;
+          this.hasMore = this._total > this.goodsList.length;
+          this._page += 1;
         }
-        StoreProvider.of<JiaYuState>(context)
-            .dispatch(DashboardLoadCompleteAction());
       } catch (e) {
         print(e);
       } finally {
         this.loading = false;
       }
+      return true;
+    }else{
+      return false;
     }
   }
 }

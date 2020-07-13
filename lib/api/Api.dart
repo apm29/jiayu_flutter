@@ -18,9 +18,12 @@ class Api {
         processor: (s) => asList(s).map((e) => Category.fromJson(e)).toList());
   }
 
-  static Future<BaseResp<PageDate<MallGoods>>> getGoodsList() {
-    return RemoteUtils().post<PageDate<MallGoods>>("/mall/goods/list",
-        processor: (s) => PageDate<MallGoods>.fromJson(
-            s, (json) => MallGoods.fromJson(json)));
+  static Future<BaseResp<PageData<MallGoods>>> getGoodsList(data) {
+    return RemoteUtils().post<PageData<MallGoods>>(
+      "/mall/goods/list",
+      processor: (s) =>
+          PageData<MallGoods>.fromJson(s, (json) => MallGoods.fromJson(json)),
+      jsonData: data
+    );
   }
 }

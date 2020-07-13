@@ -38,8 +38,8 @@ T asT<T>(dynamic value) {
   return null;
 }
 
-class PageDate<T> {
-  PageDate({
+class PageData<T> {
+  PageData({
     this.total,
     this.size,
     this.current,
@@ -50,7 +50,7 @@ class PageDate<T> {
     this.pages,
   });
 
-  factory PageDate.fromJson(
+  factory PageData.fromJson(
       Map<String, dynamic> jsonRes, JsonProcessor<T> processor) {
     if (jsonRes == null) {
       return null;
@@ -77,7 +77,7 @@ class PageDate<T> {
         }
       }
     }
-    return PageDate(
+    return PageData(
       total: asT<int>(jsonRes['total']),
       size: asT<int>(jsonRes['size']),
       current: asT<int>(jsonRes['current']),
