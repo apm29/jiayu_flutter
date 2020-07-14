@@ -1,5 +1,6 @@
 class Config {
   static const BaseUrl = 'https://jiayupearl.shop/java/';
+  static const FileBaseUrl = 'http://jiayu-pearl-mall.oss-cn-beijing.aliyuncs.com/';
   static const AppDebug = true;
   static const ConnectTimeout = 10000;
   static const ReceiveTimeout = 20000;

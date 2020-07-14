@@ -110,9 +110,9 @@ class MallGoods {
       isOnSale: asT<int>(jsonRes['isOnSale']),
       keywords: keywords,
       name: asT<String>(jsonRes['name']),
-      originPrice: asT<int>(jsonRes['originPrice']),
+      originPrice: asT<double>(jsonRes['originPrice']),
       picUrl: asT<String>(jsonRes['picUrl']),
-      retailPrice: asT<int>(jsonRes['retailPrice']),
+      retailPrice: asT<double>(jsonRes['retailPrice']),
       shareUrl: asT<String>(jsonRes['shareUrl']),
       sortOrder: asT<int>(jsonRes['sortOrder']),
       unit: asT<String>(jsonRes['unit']),
@@ -134,9 +134,9 @@ class MallGoods {
   int isOnSale;
   List<String> keywords;
   String name;
-  int originPrice;
+  double originPrice;
   String picUrl;
-  int retailPrice;
+  double retailPrice;
   String shareUrl;
   int sortOrder;
   String unit;

@@ -44,7 +44,7 @@ class DashboardModel {
   bool loading = false;
   int _total = 0;
   int _page = 1;
-  int _rows = 2;
+  int _rows = 20;
 
   ListState get listState => getListState(hasMore, loading);
 

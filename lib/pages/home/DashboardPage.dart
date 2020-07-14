@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_scaffold/components/AutoSlideDownWidget.dart';
 import 'package:flutter_scaffold/components/scroll/LoadMoreListener.dart';
 import 'package:flutter_scaffold/model/MallGoods.dart';
+import 'package:flutter_scaffold/pages/parts/GoodsListItem.dart';
 import 'package:flutter_scaffold/store/actions.dart';
 import 'package:flutter_scaffold/store/stores.dart';
 
@@ -33,16 +34,10 @@ class DashboardPage extends StatelessWidget {
                 return refresh(context);
               },
             ),
-            SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Text(data[index].name);
-                },
-                childCount: data.length,
-              ),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.618,
+
+            SliverToBoxAdapter(
+              child: Wrap(
+                children: data.map((e) => GoodsListItem(goods:e)).toList(),
               ),
             ),
             StoreConnector<JiaYuState, ListState>(
