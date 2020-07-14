@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 ///
 /// author : ciih
 /// date : 2020/7/13 3:38 PM
-/// description :
+/// description : 滑动到底部触发LoadMore
 ///
 class LoadMoreListener extends StatefulWidget {
   final Widget child;
@@ -25,7 +25,7 @@ class _LoadMoreListenerState extends State<LoadMoreListener> {
   void initState() {
     super.initState();
     _controller.stream
-        .debounceTime(Duration(milliseconds: 200))
+        .debounceTime(Duration(milliseconds: 50))
         .listen((event) => widget.onLoadMore?.call());
   }
 

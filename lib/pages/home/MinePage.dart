@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scaffold/route/route.dart';
+import 'package:flutter_scaffold/components/scroll/draggable_upper_drawer.dart';
 
 ///
 /// author : ciih
@@ -9,11 +9,6 @@ import 'package:flutter_scaffold/route/route.dart';
 class MinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: FlatButton(
-        child: Text('MinePage'),
-        onPressed: () => AppRouter.toSplash(context),
-      ),
-    );
+    return SafeArea(child: DraggableUpperDrawerWidget());
   }
 }

@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+///
+/// @author apm29
+/// 弹出loading页面，完成task后pop（task的result）
+///
 class TaskModal<T> extends ModalRoute<T> {
   /// use [AsyncVoidTask] or [AsyncResultTask]
   final Function task;
@@ -37,20 +43,24 @@ class TaskModal<T> extends ModalRoute<T> {
 
   @override
   void install() {
-    ()async{
+    () async {
       int start = DateTime.now().millisecondsSinceEpoch;
-      T result = await task?.call();
-      int end = DateTime.now().millisecondsSinceEpoch;
-      if ((end - start) < minimumLoadingTime) {
-        await Future.delayed(
-            Duration(milliseconds: minimumLoadingTime - (end - start)));
+      T result;
+      try {
+        result = await task?.call();
+      } finally {
+        int end = DateTime.now().millisecondsSinceEpoch;
+        if ((end - start) < minimumLoadingTime) {
+          await Future.delayed(
+              Duration(milliseconds: minimumLoadingTime - (end - start)));
+        }
+        navigator?.pop(result);
       }
-      navigator?.pop(result);
     }();
     super.install();
   }
 
-  static Future runTask(BuildContext context,Function task){
+  static Future runTask(BuildContext context, Function task) {
     return Navigator.of(context).push(TaskModal(task));
   }
 }
