@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,9 @@ class TaskModal<T> extends ModalRoute<T> {
   final Function task;
   final minimumLoadingTime = 800;
   final dynamic tag;
-  TaskModal(this.task,{this.tag});
+
+  TaskModal(this.task, {this.tag})
+      : super(settings: RouteSettings(name: tag));
 
   @override
   Color get barrierColor => const Color(0x66333333);
@@ -32,7 +35,7 @@ class TaskModal<T> extends ModalRoute<T> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           CupertinoActivityIndicator(),
-          Text(tag?.toString()??"")
+          Text(tag?.toString() ?? "")
         ],
       ),
     );
@@ -51,6 +54,7 @@ class TaskModal<T> extends ModalRoute<T> {
   void install() {
     () async {
       int start = DateTime.now().millisecondsSinceEpoch;
+      print('$tag start $start');
       T result;
       try {
         result = await task?.call();
@@ -60,14 +64,19 @@ class TaskModal<T> extends ModalRoute<T> {
           await Future.delayed(
               Duration(milliseconds: minimumLoadingTime - (end - start)));
         }
-        print('$tag pop ${DateTime.now().millisecondsSinceEpoch}');
-        navigator?.pop(result);
+        Navigator.of(taskPool[task]).pop(result);
+        taskPool.remove(task);
       }
     }();
     super.install();
   }
 
-  static Future runTask(BuildContext context, Function task,{dynamic tag}) {
-    return Navigator.of(context).push(TaskModal(task,tag:tag));
+  static Map<Function,BuildContext> taskPool = Map();
+
+
+  static Future runTask(BuildContext context, Function task, {dynamic tag}) {
+    taskPool[task] = context;
+    return Navigator.of(context).push(TaskModal(task, tag: tag));
   }
 }
+

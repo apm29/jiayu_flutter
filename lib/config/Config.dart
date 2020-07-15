@@ -19,5 +19,5 @@ class Config {
   static const MessageKey = 'Msg';
   static const DataKey = 'Data';
 
-  static const SplashDelay = 3000;
+  static const SplashDelay = 1000;
 }
