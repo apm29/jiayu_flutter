@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
+@deprecated
 class DioLogInterceptor extends Interceptor{
 
   final Level level;

@@ -6,7 +6,7 @@ import 'package:flutter_scaffold/pages/HomePage.dart';
 import 'package:flutter_scaffold/pages/SplashPage.dart';
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/6 5:15 PM
 /// description : 
 ///

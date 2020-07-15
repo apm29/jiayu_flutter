@@ -41,8 +41,8 @@ class RemoteUtils {
       receiveTimeout: Config.ReceiveTimeout,
       baseUrl: Config.BaseUrl,
     ));
-    _dio.interceptors.add(PrettyDioLogger(requestBody: true,responseBody: true));
-
+    _dio.interceptors
+        .add(PrettyDioLogger(requestBody: true, responseBody: false));
   }
 
   Future<BaseResp<T>> post<T>(
@@ -72,7 +72,7 @@ class RemoteUtils {
         headers: {
           Config.AuthorizationHeader: LocalCache().token,
         },
-        contentType:  Config.ContentTypeJson,
+        contentType: Config.ContentTypeJson,
         data: jsonData,
       ),
       cancelToken: cancelToken,

@@ -7,11 +7,10 @@ import 'package:flutter_scaffold/pages/home/MinePage.dart';
 import 'package:flutter_scaffold/store/actions.dart';
 import 'package:flutter_scaffold/store/stores.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_redux_dev_tools/flutter_redux_dev_tools.dart';
 import 'dart:math' as math;
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/8 1:50 PM
 /// description :
 ///
@@ -32,7 +31,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -65,9 +63,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           );
         },
       ),
-      endDrawer: Drawer(
-        child: ReduxDevTools(store),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
@@ -165,7 +160,8 @@ StoreConnector<JiaYuState, int> buildBottomNavigationBar(BuildContext context) {
           child: BottomNavigationBar(
             currentIndex: index,
             onTap: (index) {
-              store.dispatch(HomeIndexSwitchAction(index, context));
+              StoreProvider.of<JiaYuState>(context)
+                  .dispatch(HomeIndexSwitchAction(index, context));
             },
             items: [
               BottomNavigationBarItem(
@@ -188,7 +184,6 @@ StoreConnector<JiaYuState, int> buildBottomNavigationBar(BuildContext context) {
   );
 }
 
-
 class CircularNotchedRectangleWithMargin extends NotchedShape {
   final double margin;
 
@@ -196,7 +191,7 @@ class CircularNotchedRectangleWithMargin extends NotchedShape {
 
   @override
   Path getOuterPath(Rect oldHost, Rect oldGuest) {
-    if(oldGuest == null){
+    if (oldGuest == null) {
       return Path()..addRect(oldHost);
     }
     Rect host = Rect.fromLTWH(
@@ -274,4 +269,3 @@ class CircularNotchedRectangleWithMargin extends NotchedShape {
       ..close();
   }
 }
-

@@ -8,7 +8,7 @@ import 'package:flutter_scaffold/store/stores.dart';
 import 'package:oktoast/oktoast.dart';
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/8 1:48 PM
 /// description : 
 ///
@@ -20,7 +20,7 @@ class ReduxApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return StoreProvider(
-      store: store,
+      store: appStore,
       child: OKToast(
         //StoreConnector<JiaYuState, Locale> provide locale for material app
         child: StoreConnector<JiaYuState, Locale>(

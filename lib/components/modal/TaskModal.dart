@@ -11,8 +11,8 @@ class TaskModal<T> extends ModalRoute<T> {
   /// use [AsyncVoidTask] or [AsyncResultTask]
   final Function task;
   final minimumLoadingTime = 800;
-
-  TaskModal(this.task);
+  final dynamic tag;
+  TaskModal(this.task,{this.tag});
 
   @override
   Color get barrierColor => const Color(0x66333333);
@@ -28,7 +28,13 @@ class TaskModal<T> extends ModalRoute<T> {
       Animation<double> secondaryAnimation) {
     return Material(
       type: MaterialType.transparency,
-      child: CupertinoActivityIndicator(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          CupertinoActivityIndicator(),
+          Text(tag?.toString()??"")
+        ],
+      ),
     );
   }
 
@@ -54,13 +60,14 @@ class TaskModal<T> extends ModalRoute<T> {
           await Future.delayed(
               Duration(milliseconds: minimumLoadingTime - (end - start)));
         }
+        print('$tag pop ${DateTime.now().millisecondsSinceEpoch}');
         navigator?.pop(result);
       }
     }();
     super.install();
   }
 
-  static Future runTask(BuildContext context, Function task) {
-    return Navigator.of(context).push(TaskModal(task));
+  static Future runTask(BuildContext context, Function task,{dynamic tag}) {
+    return Navigator.of(context).push(TaskModal(task,tag:tag));
   }
 }

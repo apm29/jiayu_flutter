@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_scaffold/components/AutoSlideDownWidget.dart';
 import 'package:flutter_scaffold/components/scroll/LoadMoreListener.dart';
 import 'package:flutter_scaffold/model/MallGoods.dart';
+import 'package:flutter_scaffold/pages/parts/EmptyListPlaceHolder.dart';
 import 'package:flutter_scaffold/pages/parts/GoodsListItem.dart';
+import 'package:flutter_scaffold/pages/parts/ListFooterWidget.dart';
 import 'package:flutter_scaffold/store/actions.dart';
 import 'package:flutter_scaffold/store/stores.dart';
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/8 1:58 PM
 /// description :
 ///
@@ -34,37 +35,26 @@ class DashboardPage extends StatelessWidget {
                 return refresh(context);
               },
             ),
-
             SliverToBoxAdapter(
               child: Wrap(
-                children: data.map((e) => GoodsListItem(goods:e)).toList(),
+                children: data == null || data.isEmpty
+                    ? [
+                        EmptyListPlaceHolder(
+                          hint: '暂无商品',
+                        )
+                      ]
+                    : data.map((e) => GoodsListItem(goods: e)).toList(),
               ),
             ),
             StoreConnector<JiaYuState, ListState>(
               converter: (store) => store.state.dashboardModel.listState,
               builder: (context, state) => SliverToBoxAdapter(
-                child: state == ListState.Loading
-                    ? Center(child: CircularProgressIndicator())
-                    : state == ListState.NoMore
-                        ? Text(
-                            '没有更多了',
-                            textAlign: TextAlign.center,
-                          )
-                        : FlatButton(
-                            onPressed: () => loadMore(context),
-                            child: Text(
-                              '点击加载更多',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                child: ListFooterWidget(
+                  state: state,
+                  onLoadMore: loadMore,
+                ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: Container(
-                height: 300,
-                color: Colors.orangeAccent,
-              ),
-            )
           ],
         ),
       ),

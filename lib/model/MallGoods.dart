@@ -105,9 +105,9 @@ class MallGoods {
       gallery: gallery,
       goodsSn: asT<String>(jsonRes['goodsSn']),
       id: asT<int>(jsonRes['id']),
-      isHot: asT<int>(jsonRes['isHot']),
-      isNew: asT<int>(jsonRes['isNew']),
-      isOnSale: asT<int>(jsonRes['isOnSale']),
+      isHot: asT<bool>(jsonRes['isHot']),
+      isNew: asT<bool>(jsonRes['isNew']),
+      isOnSale: asT<bool>(jsonRes['isOnSale']),
       keywords: keywords,
       name: asT<String>(jsonRes['name']),
       originPrice: asT<double>(jsonRes['originPrice']),
@@ -129,9 +129,9 @@ class MallGoods {
   List<String> gallery;
   String goodsSn;
   int id;
-  int isHot;
-  int isNew;
-  int isOnSale;
+  bool isHot;
+  bool isNew;
+  bool isOnSale;
   List<String> keywords;
   String name;
   double originPrice;

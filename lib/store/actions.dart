@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/8 1:41 PM
 /// description :
 ///
@@ -21,8 +21,11 @@ class DashboardLoadAction {
   DashboardLoadAction(this.context, {this.refresh: false});
 }
 
-class DashboardLoadCompleteAction {
-  DashboardLoadCompleteAction();
+class CategoryPageLoadAction {
+  BuildContext context;
+  bool refresh;
+
+  CategoryPageLoadAction(this.context, {this.refresh: false});
 }
 
 class HomeIndexSwitchAction {
