@@ -11,21 +11,22 @@ class GoodsItemTagsWidget extends StatelessWidget {
   final bool isHot;
   final bool isNew;
   final bool isOnSale;
-
+  final _kCardRadius = 3.0;
   const GoodsItemTagsWidget(
       {Key key, this.isHot, this.isNew, this.isOnSale, this.child})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    
     return Stack(
       children: <Widget>[
         child,
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomRight: Radius.circular(8),
+                topLeft: Radius.circular(_kCardRadius),
+                bottomRight: Radius.circular(_kCardRadius),
               ),
               color: Color.fromARGB(0xff, 0xC4, 0xA4, 0x55)),
           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
@@ -62,7 +63,10 @@ class GoodsItemTagsWidget extends StatelessWidget {
         Positioned.fill(
           child: Offstage(
             child: Container(
-              decoration: BoxDecoration(color: Colors.black38),
+              decoration: BoxDecoration(
+                color: Colors.black38,
+                borderRadius: BorderRadius.all(Radius.circular(_kCardRadius)),
+              ),
               child: Container(
                 alignment: Alignment.center,
                 child: Container(

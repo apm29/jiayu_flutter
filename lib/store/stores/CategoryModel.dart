@@ -1,11 +1,12 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_scaffold/api/Api.dart';
-import 'package:flutter_scaffold/components/modal/TaskModal.dart';
 import 'package:flutter_scaffold/model/BaseResp.dart';
 import 'package:flutter_scaffold/model/Category.dart';
 import 'package:flutter_scaffold/model/MallGoods.dart';
 import 'package:flutter_scaffold/model/PageData.dart';
 import 'package:flutter_scaffold/store/stores.dart';
+import 'package:flutter_scaffold/store/actions.dart';
 
 ///
 /// author : ciih
@@ -43,34 +44,37 @@ class CategoryModel {
 
   Future<void> loadPagedData(bool refresh,BuildContext context) async {
     if (refresh) {
-      this.goodsList = [];
       this.hasMore = true;
       this.loading = false;
       this._total = 0;
       this._page = 1;
     }
     if (!this.loading && this.hasMore) {
-      await TaskModal.runTask(context, () async {
-        try {
-          this.loading = true;
-          BaseResp<PageData<MallGoods>> resp = await Api.getGoodsList({
-            "pageNo": this._page,
-            "pageSize": this._rows,
-            "sort":"categoryId",
-            "order":"asc"
-          });
-          if (resp.success) {
-            this.goodsList.addAll(resp.data.records);
-            this._total = resp.data.total;
-            this.hasMore = this._total > this.goodsList.length;
-            this._page += 1;
+      try {
+        StoreProvider.of<JiaYuState>(context).dispatch(LoadingAction(true));
+        this.loading = true;
+        BaseResp<PageData<MallGoods>> resp = await Api.getGoodsList({
+          "pageNo": this._page,
+          "pageSize": this._rows,
+          "sort":"categoryId",
+          "order":"asc"
+        });
+        if (resp.success) {
+          if(refresh){
+            this.goodsList.clear();
           }
-        } catch (e) {
-          print(e);
-        } finally {
-          this.loading = false;
+          this.goodsList.addAll(resp.data.records);
+          this._total = resp.data.total;
+          this.hasMore = this._total > this.goodsList.length;
+          this._page += 1;
         }
-      },tag: 'category');
+        await Future.delayed(Duration(seconds: 3));
+      } catch (e) {
+        print(e);
+      } finally {
+        this.loading = false;
+        StoreProvider.of<JiaYuState>(context).dispatch(LoadingAction(false));
+      }
     }
   }
 }

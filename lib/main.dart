@@ -7,6 +7,7 @@ import 'package:flutter_scaffold/store/ReduxApp.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Application.init();
+
   runApp(
     ReduxApp(
       firstPage: SplashPage(),

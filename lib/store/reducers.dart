@@ -10,6 +10,7 @@ import 'package:flutter_scaffold/store/stores.dart';
 ///
 JiaYuState appReducer(JiaYuState state, action) {
   return appStateReducer(state, action)
+    ..loading = loadingReducer(state.loading, action)
     ..dashboardModel = dashboardModalReducer(state.dashboardModel, action);
 }
 
@@ -27,6 +28,13 @@ final appStateReducer = combineReducers<JiaYuState>(
     }),
   ],
 );
+final loadingReducer = combineReducers<int>([
+  TypedReducer<int, LoadingAction>((int state, action) {
+    state += action.increase ? 1 : -1;
+    return state;
+  }),
+]);
+
 final dashboardModalReducer = combineReducers<DashboardModel>([
   TypedReducer<DashboardModel, DashboardLoadAction>((state, action) {
     return state;

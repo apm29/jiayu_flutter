@@ -14,6 +14,12 @@ class AppInitAction {
   AppInitAction(this.context);
 }
 
+class LoadingAction {
+  bool increase;
+  LoadingAction(this.increase);
+}
+
+
 class DashboardLoadAction {
   BuildContext context;
   bool refresh;

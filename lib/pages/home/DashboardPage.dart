@@ -6,8 +6,10 @@ import 'package:flutter_scaffold/model/MallGoods.dart';
 import 'package:flutter_scaffold/pages/parts/EmptyListPlaceHolder.dart';
 import 'package:flutter_scaffold/pages/parts/GoodsListItem.dart';
 import 'package:flutter_scaffold/pages/parts/ListFooterWidget.dart';
+import 'package:flutter_scaffold/pages/parts/HomeAppbarDelegate.dart';
 import 'package:flutter_scaffold/store/actions.dart';
 import 'package:flutter_scaffold/store/stores.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 ///
 /// author : apm29
@@ -35,17 +37,23 @@ class DashboardPage extends StatelessWidget {
                 return refresh(context);
               },
             ),
-            SliverToBoxAdapter(
-              child: Wrap(
-                children: data == null || data.isEmpty
-                    ? [
-                        EmptyListPlaceHolder(
-                          hint: '暂无商品',
-                        )
-                      ]
-                    : data.map((e) => GoodsListItem(goods: e)).toList(),
-              ),
+            SliverPersistentHeader(
+              delegate: HomeAppbarDelegate(),
+              pinned: true,
             ),
+
+            data == null || data.length == 0
+                ? SliverToBoxAdapter(
+                    child: EmptyListPlaceHolder(
+                      hint: '暂无商品',
+                    ),
+                  )
+                : SliverStaggeredGrid.count(
+                    crossAxisCount: calculateBestCount(MediaQuery.of(context).size.width),
+                    children: data.map((e) => GoodsListItem(goods: e)).toList(),
+                    staggeredTiles:
+                        data.map((e) => StaggeredTile.fit(1)).toList(),
+                  ),
             StoreConnector<JiaYuState, ListState>(
               converter: (store) => store.state.dashboardModel.listState,
               builder: (context, state) => SliverToBoxAdapter(
@@ -69,5 +77,20 @@ class DashboardPage extends StatelessWidget {
   Future<void> loadMore(BuildContext context) {
     return StoreProvider.of<JiaYuState>(context)
         .dispatch(DashboardLoadAction(context, refresh: false));
+  }
+
+  ///
+  /// 计算最优的Item宽度，整数个Item刚好充满maxWidth，并且宽度在180-285之间
+  ///
+  int calculateBestCount(double maxWidth) {
+    double minWidth = 180;
+    double maxWidth = 285;
+    for (int i in Iterable.generate(10, (index) => index)) {
+      var dividedWidth =  maxWidth / i;
+      if (minWidth < dividedWidth && dividedWidth < maxWidth) {
+        return i;
+      }
+    }
+    return 2;
   }
 }

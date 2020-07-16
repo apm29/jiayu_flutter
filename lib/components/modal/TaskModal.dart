@@ -54,7 +54,6 @@ class TaskModal<T> extends ModalRoute<T> {
   void install() {
     () async {
       int start = DateTime.now().millisecondsSinceEpoch;
-      print('$tag start $start');
       T result;
       try {
         result = await task?.call();

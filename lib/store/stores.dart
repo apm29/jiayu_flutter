@@ -36,7 +36,9 @@ class JiaYuState {
   DashboardModel dashboardModel = DashboardModel();
   CategoryModel categoryModel = CategoryModel();
 
-  JiaYuState() : this.locale = Locale(LocalCache().locale ?? 'zh');
+  JiaYuState()
+      : this.locale =
+            Locale.fromSubtags(languageCode: LocalCache().locale ?? 'en');
 }
 
 enum ListState { Loading, NoMore, HasMore }

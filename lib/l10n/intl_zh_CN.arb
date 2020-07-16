@@ -1,5 +1,8 @@
 {
   "@@locale":"zh_CN",
   "appName": "佳谕珍珠",
-  "skipLabel": "跳过"
+  "skipLabel": "跳过",
+  "home": "首页",
+  "category": "类目",
+  "mine": "我的"
 }

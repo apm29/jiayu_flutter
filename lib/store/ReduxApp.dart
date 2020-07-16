@@ -10,9 +10,9 @@ import 'package:oktoast/oktoast.dart';
 ///
 /// author : apm29
 /// date : 2020/7/8 1:48 PM
-/// description : 
+/// description :
 ///
-class ReduxApp extends StatelessWidget{
+class ReduxApp extends StatelessWidget {
   final Widget firstPage;
 
   const ReduxApp({Key key, this.firstPage}) : super(key: key);
@@ -39,14 +39,25 @@ class ReduxApp extends StatelessWidget{
             supportedLocales: S.delegate.supportedLocales,
             theme: ThemeData(
               primarySwatch: Colors.amber,
-              platform:TargetPlatform.iOS,
+              platform: TargetPlatform.iOS,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             darkTheme: ThemeData.dark().copyWith(
-              platform:TargetPlatform.iOS,
+              platform: TargetPlatform.iOS,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: firstPage,
+            home: Stack(children: [
+              firstPage,
+              StoreConnector<JiaYuState, int>(
+                converter: (store) => store.state.loading,
+                builder: (context, loading) => Offstage(
+                  offstage: loading > 0,
+                  child: Center(
+                    child: CupertinoActivityIndicator(),
+                  ),
+                ),
+              )
+            ]),
           ),
         ),
       ),

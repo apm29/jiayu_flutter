@@ -166,15 +166,15 @@ StoreConnector<JiaYuState, int> buildBottomNavigationBar(BuildContext context) {
             items: [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                title: Text(S.of(context).appName),
+                title: Text(S.of(context).home),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.apps),
-                title: Text(S.of(context).appName),
+                title: Text(S.of(context).category),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                title: Text(S.of(context).appName),
+                title: Text(S.of(context).mine),
               ),
             ],
           ),
