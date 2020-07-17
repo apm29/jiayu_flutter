@@ -5,7 +5,7 @@
 ///
 import 'dart:convert' show json;
 import 'package:flutter/foundation.dart';
-import 'package:flutter_scaffold/api/RemoteUtils.dart';
+import 'package:jiayu_flutter/api/RemoteUtils.dart';
 
 void tryCatch(Function f) {
   try {

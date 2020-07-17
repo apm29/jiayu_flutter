@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_scaffold/generated/l10n.dart';
+import 'package:jiayu_flutter/generated/l10n.dart';
 
 ///
 /// author : apm29
@@ -18,9 +18,9 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
   final _kSearchBarShadowOffsetY = 12.0;
   final _kSearchBarMarginTop = 8.0;
   final searchBarColor = Colors.grey[400];
+
   double get _kSearchBarMarginBottom =>
       _kSearchBarShadowBlur + _kSearchBarShadowOffsetY;
-
 
   @override
   double get maxExtent => 144;
@@ -36,7 +36,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
     percent = percent.clamp(0.0, 1.0);
     double easeInExpoPercent = Curves.easeInExpo.transform(percent);
     Tween<double> titleTopTween = Tween(
-      begin: systemPadding + (minExtent-systemPadding-titleFontSize)/2,
+      begin: systemPadding + (minExtent - systemPadding - titleFontSize) / 2,
       end: -titleFontSize,
     );
     Tween<double> titleFontTween = Tween(
@@ -64,9 +64,7 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       end: 0,
     );
     Tween<double> searchHeightTween = Tween(
-      begin: maxExtent -
-          minExtent -
-          _kSearchBarMarginBottom ,
+      begin: maxExtent - minExtent - _kSearchBarMarginBottom,
       end: minExtent - systemPadding - 2 * _kSearchBarMarginTop,
     );
     ColorTween searchBorderColorTween = ColorTween(
@@ -130,18 +128,21 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
               height: searchHeightTween.transform(percent),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(_kCardRadius)),
-                  border: Border.all(
-                    color: searchBorderColorTween.transform(percent),
-                    width: 0.1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: searchBarColor,
-                      offset:
-                          Offset(0, searchShadowOffsetTween.transform(percent)),
-                      blurRadius: searchShadowBlurTween.transform(percent),
-                    )
-                  ],
+                  border:Border.all(
+                          color: searchBorderColorTween.transform(percent),
+                          width: 0.1,
+                        ),
+                  boxShadow: percent == 1
+                      ? []
+                      : [
+                          BoxShadow(
+                            color: searchBarColor,
+                            offset: Offset(
+                                0, searchShadowOffsetTween.transform(percent)),
+                            blurRadius:
+                                searchShadowBlurTween.transform(percent),
+                          )
+                        ],
                   color: Colors.white),
               margin: EdgeInsets.only(
                 bottom: _kSearchBarMarginBottom,
@@ -168,8 +169,6 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
       ),
     );
   }
-
-
 
   @override
   bool shouldRebuild(HomeAppbarDelegate oldDelegate) {

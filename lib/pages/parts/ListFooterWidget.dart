@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scaffold/store/stores.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 
 ///
 /// author : apm29

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_scaffold/components/modal/TaskModal.dart';
-import 'package:flutter_scaffold/store/actions.dart';
-import 'package:flutter_scaffold/store/stores.dart';
+import 'package:jiayu_flutter/components/modal/TaskModal.dart';
+import 'package:jiayu_flutter/store/actions.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:redux/redux.dart';
 

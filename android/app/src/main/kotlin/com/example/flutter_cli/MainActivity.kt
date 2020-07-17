@@ -1,4 +1,4 @@
-package com.example.flutter_scaffold
+package com.example.jiayu_flutter
 
 import io.flutter.embedding.android.FlutterActivity
 

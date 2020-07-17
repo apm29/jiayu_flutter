@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_scaffold/api/PrettyLoggerInterceptor.dart';
-import 'package:flutter_scaffold/config/Config.dart';
-import 'package:flutter_scaffold/model/BaseResp.dart';
-import 'package:flutter_scaffold/storage/LocalCache.dart';
+import 'package:jiayu_flutter/api/PrettyLoggerInterceptor.dart';
+import 'package:jiayu_flutter/config/Config.dart';
+import 'package:jiayu_flutter/model/BaseResp.dart';
+import 'package:jiayu_flutter/storage/LocalCache.dart';
 
 typedef JsonProcessor<T> = T Function(dynamic json);
 

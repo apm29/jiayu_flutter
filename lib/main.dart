@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scaffold/application/Application.dart';
-import 'package:flutter_scaffold/pages/SplashPage.dart';
-import 'package:flutter_scaffold/store/ReduxApp.dart';
+import 'package:jiayu_flutter/application/Application.dart';
+import 'package:jiayu_flutter/pages/SplashPage.dart';
+import 'package:jiayu_flutter/store/ReduxApp.dart';
 
 
 void main() async {

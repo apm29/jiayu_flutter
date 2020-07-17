@@ -1,8 +1,8 @@
-import 'package:flutter_scaffold/model/BaseResp.dart';
-import 'package:flutter_scaffold/api/RemoteUtils.dart';
-import 'package:flutter_scaffold/model/Category.dart';
-import 'package:flutter_scaffold/model/MallGoods.dart';
-import 'package:flutter_scaffold/model/PageData.dart';
+import 'package:jiayu_flutter/model/BaseResp.dart';
+import 'package:jiayu_flutter/api/RemoteUtils.dart';
+import 'package:jiayu_flutter/model/Category.dart';
+import 'package:jiayu_flutter/model/MallGoods.dart';
+import 'package:jiayu_flutter/model/PageData.dart';
 
 List asList(dynamic value) {
   if (value == null || value is! List) {

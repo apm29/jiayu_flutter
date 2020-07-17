@@ -1,16 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_scaffold/api/Api.dart';
-import 'package:flutter_scaffold/components/modal/TaskModal.dart';
-import 'package:flutter_scaffold/model/BaseResp.dart';
-import 'package:flutter_scaffold/model/MallGoods.dart';
-import 'package:flutter_scaffold/model/PageData.dart';
-import 'package:flutter_scaffold/storage/LocalCache.dart';
-import 'package:flutter_scaffold/store/middlewares.dart';
-import 'package:flutter_scaffold/store/reducers.dart';
-import 'package:flutter_scaffold/store/stores/CategoryModel.dart';
-import 'package:flutter_scaffold/store/stores/DashBoardModel.dart';
+import 'package:jiayu_flutter/storage/LocalCache.dart';
+import 'package:jiayu_flutter/store/middlewares.dart';
+import 'package:jiayu_flutter/store/reducers.dart';
+import 'package:jiayu_flutter/store/stores/CategoryModel.dart';
+import 'package:jiayu_flutter/store/stores/DashBoardModel.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
 
 ///

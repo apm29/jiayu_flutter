@@ -1,4 +1,4 @@
-import 'package:flutter_scaffold/config/Config.dart';
+import 'package:jiayu_flutter/config/Config.dart';
 
 class BaseResp<T> {
   int code;

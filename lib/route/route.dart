@@ -1,9 +1,9 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_scaffold/application/Application.dart';
-import 'package:flutter_scaffold/pages/HomePage.dart';
-import 'package:flutter_scaffold/pages/SplashPage.dart';
+import 'package:jiayu_flutter/application/Application.dart';
+import 'package:jiayu_flutter/pages/HomePage.dart';
+import 'package:jiayu_flutter/pages/SplashPage.dart';
 
 ///
 /// author : apm29

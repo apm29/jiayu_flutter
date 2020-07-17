@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_scaffold/components/scroll/LoadMoreListener.dart';
-import 'package:flutter_scaffold/model/MallGoods.dart';
-import 'package:flutter_scaffold/pages/parts/EmptyListPlaceHolder.dart';
-import 'package:flutter_scaffold/pages/parts/GoodsListItem.dart';
-import 'package:flutter_scaffold/pages/parts/ListFooterWidget.dart';
-import 'package:flutter_scaffold/pages/parts/HomeAppbarDelegate.dart';
-import 'package:flutter_scaffold/store/actions.dart';
-import 'package:flutter_scaffold/store/stores.dart';
+import 'package:jiayu_flutter/components/scroll/LoadMoreListener.dart';
+import 'package:jiayu_flutter/model/MallGoods.dart';
+import 'package:jiayu_flutter/pages/parts/EmptyListPlaceHolder.dart';
+import 'package:jiayu_flutter/pages/parts/GoodsListItem.dart';
+import 'package:jiayu_flutter/pages/parts/ListFooterWidget.dart';
+import 'package:jiayu_flutter/pages/parts/HomeAppbarDelegate.dart';
+import 'package:jiayu_flutter/store/actions.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 ///

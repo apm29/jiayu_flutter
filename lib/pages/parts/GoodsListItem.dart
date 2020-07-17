@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scaffold/config/Config.dart';
-import 'package:flutter_scaffold/model/MallGoods.dart';
-import 'package:flutter_scaffold/pages/parts/GoodsItemTagsWidget.dart';
-import 'package:flutter_scaffold/pages/style/styles.dart';
+import 'package:jiayu_flutter/config/Config.dart';
+import 'package:jiayu_flutter/model/MallGoods.dart';
+import 'package:jiayu_flutter/pages/parts/GoodsItemTagsWidget.dart';
+import 'package:jiayu_flutter/pages/style/styles.dart';
 
 ///
 /// author : apm29

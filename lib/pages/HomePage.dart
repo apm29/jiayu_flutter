@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_scaffold/components/AutoSlideDownWidget.dart';
-import 'package:flutter_scaffold/generated/l10n.dart';
-import 'package:flutter_scaffold/pages/home/CategoryPage.dart';
-import 'package:flutter_scaffold/pages/home/DashboardPage.dart';
-import 'package:flutter_scaffold/pages/home/MinePage.dart';
-import 'package:flutter_scaffold/store/actions.dart';
-import 'package:flutter_scaffold/store/stores.dart';
+import 'package:jiayu_flutter/components/AutoSlideDownWidget.dart';
+import 'package:jiayu_flutter/generated/l10n.dart';
+import 'package:jiayu_flutter/pages/home/CategoryPage.dart';
+import 'package:jiayu_flutter/pages/home/DashboardPage.dart';
+import 'package:jiayu_flutter/pages/home/MinePage.dart';
+import 'package:jiayu_flutter/store/actions.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'dart:math' as math;
 

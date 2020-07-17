@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_scaffold/api/Api.dart';
-import 'package:flutter_scaffold/model/BaseResp.dart';
-import 'package:flutter_scaffold/model/Category.dart';
-import 'package:flutter_scaffold/model/MallGoods.dart';
-import 'package:flutter_scaffold/model/PageData.dart';
-import 'package:flutter_scaffold/store/stores.dart';
-import 'package:flutter_scaffold/store/actions.dart';
+import 'package:jiayu_flutter/api/Api.dart';
+import 'package:jiayu_flutter/model/BaseResp.dart';
+import 'package:jiayu_flutter/model/Category.dart';
+import 'package:jiayu_flutter/model/MallGoods.dart';
+import 'package:jiayu_flutter/model/PageData.dart';
+import 'package:jiayu_flutter/store/stores.dart';
+import 'package:jiayu_flutter/store/actions.dart';
 
 ///
 /// author : ciih

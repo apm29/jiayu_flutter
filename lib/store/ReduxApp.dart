@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_scaffold/config/Config.dart';
-import 'package:flutter_scaffold/generated/l10n.dart';
-import 'package:flutter_scaffold/store/stores.dart';
+import 'package:jiayu_flutter/config/Config.dart';
+import 'package:jiayu_flutter/generated/l10n.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 import 'package:oktoast/oktoast.dart';
 
 ///
