@@ -44,7 +44,7 @@ class _DraggableUpperDrawerWidgetState extends State<DraggableUpperDrawerWidget>
   final GlobalKey _drawerBottomKey = GlobalKey();
   final GlobalKey _drawerTopKey = GlobalKey();
   final GlobalKey _drawerHandlerKey = GlobalKey();
-  final GlobalKey _StackKey = GlobalKey();
+  final GlobalKey _stackKey = GlobalKey();
 
   double get _bottomHeight {
     final RenderBox box =
@@ -69,7 +69,7 @@ class _DraggableUpperDrawerWidgetState extends State<DraggableUpperDrawerWidget>
 
   double get _stackHeight {
     final RenderBox box =
-    _StackKey.currentContext?.findRenderObject() as RenderBox;
+    _stackKey.currentContext?.findRenderObject() as RenderBox;
     if (box != null) return box.size.height;
     return 100; // drawer not being shown currently
   }
@@ -106,7 +106,7 @@ class _DraggableUpperDrawerWidgetState extends State<DraggableUpperDrawerWidget>
     Widget upper = Image.asset('assets/images/jiayu_logo.png');
     Widget dragHandler = buildDragHandler();
     return Stack(
-      key: _StackKey,
+      key: _stackKey,
       fit: StackFit.expand,
       children: <Widget>[
         Positioned.fill(child: background),

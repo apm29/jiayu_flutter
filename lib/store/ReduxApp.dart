@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 import 'package:jiayu_flutter/config/Config.dart';
 import 'package:jiayu_flutter/generated/l10n.dart';
 import 'package:jiayu_flutter/store/stores.dart';
@@ -19,7 +20,7 @@ class ReduxApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider(
+    return StoreProvider<JiaYuState>(
       store: appStore,
       child: OKToast(
         //StoreConnector<JiaYuState, Locale> provide locale for material app

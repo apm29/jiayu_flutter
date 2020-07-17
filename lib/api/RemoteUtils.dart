@@ -41,8 +41,11 @@ class RemoteUtils {
       receiveTimeout: Config.ReceiveTimeout,
       baseUrl: Config.BaseUrl,
     ));
-    _dio.interceptors
-        .add(PrettyDioLogger(requestBody: true, responseBody: false));
+    _dio.interceptors.add(PrettyDioLogger(
+      requestBody: false,
+      responseBody: false,
+      responseHeader: false,
+    ));
   }
 
   Future<BaseResp<T>> post<T>(
