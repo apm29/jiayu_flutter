@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jiayu_flutter/config/Config.dart';
+import 'package:jiayu_flutter/components/scroll/ImagePlaceholder.dart';
 import 'package:jiayu_flutter/model/MallGoods.dart';
 import 'package:jiayu_flutter/pages/parts/GoodsItemTagsWidget.dart';
 import 'package:jiayu_flutter/pages/style/styles.dart';
@@ -41,9 +41,8 @@ class GoodsListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Image.network(
-                    Config.FileBaseUrl + goods.picUrl,
-                    fit: BoxFit.fitHeight,
+                  ImagePlaceholder(
+                    src: goods.picUrl,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 6),
