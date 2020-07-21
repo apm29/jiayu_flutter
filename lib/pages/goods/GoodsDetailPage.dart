@@ -122,6 +122,7 @@ class GoodsDetailPage extends StatelessWidget {
                             ),
                             SubTitle('商品规格'),
                             Text(goodsDetail.specifications.toString()),
+                            SpecificationGrid(),
                             Html(data: goodsDetail.goods.detail),
                           ],
                         ),
@@ -277,6 +278,53 @@ class PriceTag extends StatelessWidget {
             style: goodsDetailTagStyle,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class SpecificationGrid extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      child: StoreConnector<GoodsStore, Map<String, List<Specifications>>>(
+        converter: (store) => store.state.specificationsMap,
+        builder: (context, map) => Column(
+          children: map.keys
+              .map((e) => Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          e,
+                          style: goodsDetailBriefStyle,
+                        ),
+                      ),
+                      Expanded(
+                        child: Wrap(
+                          children: map[e]
+                              .map(
+                                (e) => Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  constraints: BoxConstraints(
+                                    minWidth: 80
+                                  ),
+                                  color: Colors.amber,
+                                  child: Text(
+                                    e.value,
+                                    style: goodsDetailBriefStyle.copyWith(
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      )
+                    ],
+                  ))
+              .toList(),
+        ),
       ),
     );
   }
