@@ -1,6 +1,7 @@
 import 'package:jiayu_flutter/model/BaseResp.dart';
 import 'package:jiayu_flutter/api/RemoteUtils.dart';
 import 'package:jiayu_flutter/model/Category.dart';
+import 'package:jiayu_flutter/model/GoodsDetail.dart';
 import 'package:jiayu_flutter/model/MallGoods.dart';
 import 'package:jiayu_flutter/model/PageData.dart';
 
@@ -19,11 +20,14 @@ class Api {
   }
 
   static Future<BaseResp<PageData<MallGoods>>> getGoodsList(data) {
-    return RemoteUtils().post<PageData<MallGoods>>(
-      "/mall/goods/list",
-      processor: (s) =>
-          PageData<MallGoods>.fromJson(s, (json) => MallGoods.fromJson(json)),
-      jsonData: data
-    );
+    return RemoteUtils().post<PageData<MallGoods>>("/mall/goods/list",
+        processor: (s) =>
+            PageData<MallGoods>.fromJson(s, (json) => MallGoods.fromJson(json)),
+        jsonData: data);
+  }
+
+  static Future<BaseResp<GoodsDetail>> getGoodsDetail(goodsId) {
+    return RemoteUtils().post<GoodsDetail>("/mall/goods/get",
+        processor: (s) => GoodsDetail.fromJson(s), jsonData: {"id": goodsId});
   }
 }

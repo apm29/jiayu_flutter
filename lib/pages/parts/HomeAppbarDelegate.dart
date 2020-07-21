@@ -128,10 +128,10 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
               height: searchHeightTween.transform(percent),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(_kCardRadius)),
-                  border:Border.all(
-                          color: searchBorderColorTween.transform(percent),
-                          width: 0.1,
-                        ),
+                  border: Border.all(
+                    color: searchBorderColorTween.transform(percent),
+                    width: 0.1,
+                  ),
                   boxShadow: percent == 1
                       ? []
                       : [
@@ -141,7 +141,14 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
                                 0, searchShadowOffsetTween.transform(percent)),
                             blurRadius:
                                 searchShadowBlurTween.transform(percent),
-                          )
+                          ),
+                          BoxShadow(
+                            color: Colors.grey[100],
+                            offset: Offset(0,
+                                -searchShadowOffsetTween.transform(percent)),
+                            blurRadius:
+                                searchShadowBlurTween.transform(percent),
+                          ),
                         ],
                   color: Colors.white),
               margin: EdgeInsets.only(

@@ -5,7 +5,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:jiayu_flutter/store/stores.dart';
 import 'package:jiayu_flutter/config/Config.dart';
 import 'package:jiayu_flutter/generated/l10n.dart';
-import 'package:jiayu_flutter/store/stores.dart';
 import 'package:oktoast/oktoast.dart';
 
 ///

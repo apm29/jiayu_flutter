@@ -44,6 +44,7 @@ class RemoteUtils {
     _dio.interceptors.add(PrettyDioLogger(
       requestBody: false,
       responseBody: false,
+      requestHeader: false,
       responseHeader: false,
     ));
   }

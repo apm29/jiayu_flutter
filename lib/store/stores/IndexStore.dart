@@ -21,7 +21,7 @@ final DevToolsStore<IndexStore> indexStore = DevToolsStore<IndexStore>(
   middleware: createAppMiddleware(),
 );
 
-class IndexStore extends ChangeNotifier{
+class IndexStore {
   List<int> category = [0,0];
   List<Category> categoryList = [];
   List<MallGoods> goodsList = [];
@@ -95,10 +95,6 @@ class IndexStore extends ChangeNotifier{
       }
     }
   }
-  changed(){
-    notifyListeners();
-  }
-
 }
 IndexStore indexReducer(IndexStore state, action) {
   return appStateReducer(state, action);
@@ -107,6 +103,9 @@ IndexStore indexReducer(IndexStore state, action) {
 final appStateReducer = combineReducers<IndexStore>(
   [
     TypedReducer<IndexStore, CategoryPageLoadAction>((state, action) {
+      return state;
+    }),
+    TypedReducer<IndexStore, CategoryChangeAction>((state, action) {
       return state;
     }),
   ],
@@ -126,13 +125,17 @@ onCategoryChange(Store<IndexStore> store,CategoryChangeAction action, NextDispat
   if(!arrayEqual(store.state.category, action.category)){
     //next(action);
     store.state.category = action.category;
-    store.state.changed();
+    next(action);
   }
 }
 loadCategoryPage(
     Store<IndexStore> store, CategoryPageLoadAction action, NextDispatcher next) {
   return () async {
-    await store.state.loadCategoryData(action.context);
+    if(action.refresh) {
+      await store.state.loadCategoryData(action.context);
+    }else{
+      await store.state.loadPagedData(false, action.context);
+    }
     next(action);
   }();
 }

@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:jiayu_flutter/application/Application.dart';
 import 'package:jiayu_flutter/pages/HomePage.dart';
 import 'package:jiayu_flutter/pages/SplashPage.dart';
+import 'package:jiayu_flutter/pages/goods/GoodsDetailPage.dart';
 
 ///
 /// author : apm29
@@ -14,6 +15,7 @@ class Routes {
   static String root = "/";
   static String home = "/home";
   static String login = "/login";
+  static String goodsDetail = "/goods/detail";
 
   static String keyId = "id";
   static String keyData = "id";
@@ -32,6 +34,7 @@ class Routes {
     /// 我这边先不设置默认的转场动画，转场动画在下面会讲，可以在另外一个地方设置（可以看NavigatorUtil类）
     router.define(root, handler: splashHandler);
     router.define(home, handler: homeHandler);
+    router.define("$goodsDetail/:$keyId", handler: goodsDetailHandler);
   }
 }
 
@@ -45,6 +48,12 @@ final splashHandler = new Handler(
 final homeHandler = new Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params) {
     return HomePage();
+  },
+);
+
+final goodsDetailHandler = new Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+    return GoodsDetailPage(goodsId: params[Routes.keyId].first);
   },
 );
 
@@ -82,6 +91,14 @@ class AppRouter {
     return Application.router.navigateTo(
       context,
       Routes.root,
+      transition: defaultTransitionType,
+    );
+  }
+
+  static Future toGoodsDetail(BuildContext context,dynamic goodsId) {
+    return Application.router.navigateTo(
+      context,
+      "${Routes.goodsDetail}/$goodsId",
       transition: defaultTransitionType,
     );
   }

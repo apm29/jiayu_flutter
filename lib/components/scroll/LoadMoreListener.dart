@@ -11,8 +11,10 @@ import 'package:rxdart/rxdart.dart';
 class LoadMoreListener extends StatefulWidget {
   final Widget child;
   final VoidCallback onLoadMore;
+  final NotificationListenerCallback<ScrollNotification> onNotification;
 
-  LoadMoreListener({@required this.child, @required this.onLoadMore});
+  LoadMoreListener(
+      {@required this.child, @required this.onLoadMore, this.onNotification});
 
   @override
   _LoadMoreListenerState createState() => _LoadMoreListenerState();
@@ -42,7 +44,7 @@ class _LoadMoreListenerState extends State<LoadMoreListener> {
         if (notification.metrics.extentAfter <= 0.0) {
           _controller.add(notification);
         }
-        return false;
+        return widget.onNotification?.call(notification) ?? false;
       },
       child: widget.child,
     );
