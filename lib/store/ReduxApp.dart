@@ -38,7 +38,21 @@ class ReduxApp extends StatelessWidget {
             locale: locale,
             supportedLocales: S.delegate.supportedLocales,
             theme: ThemeData(
-              primarySwatch: Colors.amber,
+              primarySwatch: MaterialColor(
+                0xffb69444,
+                <int, Color>{
+                  50: Color(0xFFB6D13A),
+                  100: Color(0xFFB6C509),
+                  200: Color(0xFFB6B8D8),
+                  300: Color(0xFFB6ACA7),
+                  400: Color(0xFFB6A075),
+                  500: Color(0xffb69444),
+                  600: Color(0xFFB68813),
+                  700: Color(0xFFB68200),
+                  800: Color(0xFFB67600),
+                  900: Color(0xFFB67000),
+                },
+              ),
               platform: TargetPlatform.iOS,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),

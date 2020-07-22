@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:jiayu_flutter/components/scroll/LoadMoreListener.dart';
 import 'package:jiayu_flutter/model/MallGoods.dart';
 import 'package:jiayu_flutter/pages/parts/GoodsListItem.dart';
+import 'package:jiayu_flutter/pages/style/styles.dart';
 import 'package:jiayu_flutter/store/actions.dart';
 import 'package:jiayu_flutter/store/stores/IndexStore.dart';
 import 'package:redux/redux.dart';
@@ -107,7 +108,7 @@ class CategoryPage extends StatelessWidget {
       children: <Widget>[
         isCurrentCategory(vm, index)
             ? Container(
-                color: Colors.amber,
+                color: mainColor,
                 width: 5,
                 height: (48 + 16 * 1.1).toDouble(),
               )

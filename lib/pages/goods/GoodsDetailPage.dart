@@ -7,10 +7,10 @@ import 'package:jiayu_flutter/components/scroll/ImagePlaceholder.dart';
 import 'package:jiayu_flutter/model/GoodsDetail.dart';
 import 'package:jiayu_flutter/pages/style/styles.dart';
 import 'package:jiayu_flutter/store/stores/GoodsStore.dart';
-import 'package:redux/src/store.dart';
+import 'package:redux/redux.dart';
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/21 3:09 PM
 /// description :
 ///
@@ -21,117 +21,157 @@ class GoodsDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<GoodsStore>(
-      store: goodsStore,
-      child: Builder(
-        builder: (context) => StoreConnector<GoodsStore, GoodsDetail>(
-          converter: (store) {
-            var detail = store.state.goodsDetail;
-            return detail;
-          },
-          onInit: (store) =>
-              store.dispatch(GoodsDetailLoadAction(context, goodsId)),
-          builder: (context, goodsDetail) => Scaffold(
-            body: goodsDetail == null
-                ? Center(
-                    child: CupertinoActivityIndicator(),
-                  )
-                : CustomScrollView(
-                    slivers: <Widget>[
-                      CupertinoSliverRefreshControl(
-                        onRefresh: () async {
-                          await StoreProvider.of<GoodsStore>(context,
-                                  listen: false)
-                              .dispatch(
-                                  GoodsDetailLoadAction(context, goodsId));
-                        },
-                      ),
-                      SliverToBoxAdapter(
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.618,
-                              child: StoreConnector<GoodsStore, PageController>(
+    return Scaffold(
+      body: StoreProvider<GoodsStore>(
+        store: goodsStore,
+        child: Builder(
+          builder: (context) => StoreConnector<GoodsStore, GoodsDetail>(
+            converter: (store) {
+              var detail = store.state.goodsDetail;
+              return detail;
+            },
+            onInit: (store) =>
+                store.dispatch(GoodsDetailLoadAction(context, goodsId)),
+            builder: (context, goodsDetail) => Scaffold(
+              body: goodsDetail == null
+                  ? Center(
+                      child: CupertinoActivityIndicator(),
+                    )
+                  : CustomScrollView(
+                      slivers: <Widget>[
+                        CupertinoSliverRefreshControl(
+                          onRefresh: () async {
+                            await StoreProvider.of<GoodsStore>(context,
+                                    listen: false)
+                                .dispatch(
+                                    GoodsDetailLoadAction(context, goodsId));
+                          },
+                        ),
+                        SliverToBoxAdapter(
+                          child: Stack(
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.width * 0.618,
+                                child:
+                                    StoreConnector<GoodsStore, PageController>(
+                                  converter: (store) =>
+                                      store.state.pageController,
+                                  builder: (context, controller) =>
+                                      PageView.builder(
+                                    controller: controller,
+                                    itemBuilder: (context, index) =>
+                                        ImageWithPlaceholder(
+                                      src: goodsDetail.goods.gallery[index],
+                                    ),
+                                    itemCount: goodsDetail.goods.gallery.length,
+                                  ),
+                                ),
+                              ),
+                              StoreConnector<GoodsStore, PageController>(
                                 converter: (store) =>
                                     store.state.pageController,
-                                builder: (context, controller) =>
-                                    PageView.builder(
-                                  controller: controller,
-                                  itemBuilder: (context, index) =>
-                                      ImageWithPlaceholder(
-                                    src: goodsDetail.goods.gallery[index],
+                                builder: (context, controller) => Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: PageViewIndicator(
+                                    pageController: controller,
+                                    count: goodsDetail.goods.gallery.length,
                                   ),
-                                  itemCount: goodsDetail.goods.gallery.length,
                                 ),
                               ),
-                            ),
-                            StoreConnector<GoodsStore, PageController>(
-                              converter: (store) => store.state.pageController,
-                              builder: (context, controller) => Positioned(
-                                bottom: 0,
-                                left: 0,
-                                right: 0,
-                                child: PageViewIndicator(
-                                  pageController: controller,
-                                  count: goodsDetail.goods.gallery.length,
+                              SafeArea(child: BackButton())
+                            ],
+                          ),
+                        ),
+                        SliverList(
+                          delegate: SliverChildListDelegate.fixed(
+                            [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 16,
+                                  horizontal: 6,
+                                ),
+                                child: Text(
+                                  goodsDetail.goods.name,
+                                  style: goodsDetailTitleStyle,
                                 ),
                               ),
-                            ),
-                            SafeArea(child: BackButton())
-                          ],
-                        ),
-                      ),
-                      SliverList(
-                        delegate: SliverChildListDelegate.fixed(
-                          [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 16,
-                                horizontal: 6,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 6,
+                                ),
+                                child: Text(
+                                  goodsDetail.goods.brief,
+                                  style: goodsDetailBriefStyle,
+                                ),
                               ),
-                              child: Text(
-                                goodsDetail.goods.name,
-                                style: goodsDetailTitleStyle,
+                              SubTitle('商品信息'),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 12,
+                                  horizontal: 6,
+                                ),
+                                child: Wrap(
+                                  children: [
+                                    PriceTag(
+                                        goodsDetail.goods.originPrice, '市场价'),
+                                    PriceTag(
+                                        goodsDetail.goods.retailPrice, '底价'),
+                                    ...goodsDetail.attributes
+                                        .map((e) => AttributeTag(e))
+                                        .toList()
+                                  ],
+                                ),
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 6,
-                              ),
-                              child: Text(
-                                goodsDetail.goods.brief,
-                                style: goodsDetailBriefStyle,
-                              ),
-                            ),
-                            SubTitle('商品信息'),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 6,
-                              ),
-                              child: Wrap(
-                                children: [
-                                  PriceTag(
-                                      goodsDetail.goods.originPrice, '市场价'),
-                                  PriceTag(goodsDetail.goods.retailPrice, '底价'),
-                                  ...goodsDetail.attributes
-                                      .map((e) => AttributeTag(e))
-                                      .toList()
-                                ],
-                              ),
-                            ),
-                            SubTitle('商品规格'),
-                            SpecificationGrid(),
-                            SubTitle('商品详情'),
-                            Html(data: goodsDetail.goods.detail),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                              SubTitle('商品规格'),
+                              SpecificationGrid(),
+                              SubTitle('商品详情'),
+                              Html(data: goodsDetail.goods.detail),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+            ),
           ),
         ),
+      ),
+      extendBody: true,
+      bottomNavigationBar: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: MaterialButton(
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.star,color: Colors.white,),
+                  Text(
+                    '收藏',
+                    style: goodsDetailFooterStyle,
+                  ),
+                ],
+              ),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              color: mainColor,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: MaterialButton(
+                onPressed: () {},
+                child: Text(
+                  '咨询客服',
+                  style: goodsDetailFooterStyle,
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                color: mainSecondaryColor),
+          ),
+        ],
       ),
     );
   }
@@ -184,7 +224,7 @@ class _PageViewIndicatorState extends State<PageViewIndicator> {
                         width: currentIndex == e ? 30 : 20,
                         height: 4,
                         margin: EdgeInsets.symmetric(horizontal: 5),
-                        color: currentIndex == e ? Colors.amber : Colors.grey,
+                        color: currentIndex == e ? mainColor : Colors.grey,
                       ))
                   .toList(),
             ),
@@ -207,7 +247,7 @@ class SubTitle extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(vertical: 8, horizontal: 6),
           padding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-          color: Colors.black87,
+          color: mainSecondaryColor,
           child: Text(
             text,
             style: goodsDetailBriefStyle.copyWith(color: Colors.white),
@@ -298,11 +338,11 @@ class SpecificationGrid extends StatelessWidget {
                     buildSpecificationRow(specificationKeys, store))
                 .toList(),
             Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 8,
-                ),
-                child: PriceTag(store.state.currentProducts?.price, '价格'),
+              padding: EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 8,
+              ),
+              child: PriceTag(store.state.currentProducts?.price, '价格'),
             ),
             Container(
               padding: EdgeInsets.symmetric(
@@ -361,7 +401,7 @@ class SpecificationGrid extends StatelessWidget {
         margin: EdgeInsets.only(right: 12),
         constraints: BoxConstraints(minWidth: 80),
         color: store.state.specificationMatch(e)
-            ? Colors.orangeAccent[100]
+            ? mainColor
             : Colors.grey[400],
         child: Text(
           e.value,

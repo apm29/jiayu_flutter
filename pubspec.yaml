@@ -61,6 +61,8 @@ dependencies:
   scrollable_positioned_list: ^0.1.6
   ## v-html
   flutter_html: ^1.0.0-pre.1
+  ## 微信sdk
+  fluwx_no_pay: ^2.1.1
 
 dev_dependencies:
   flutter_test:

@@ -9,7 +9,7 @@ import 'package:redux_dev_tools/redux_dev_tools.dart';
 import 'package:redux/redux.dart';
 
 ///
-/// author : ciih
+/// author : apm29
 /// date : 2020/7/17 2:01 PM
 /// description :
 ///
