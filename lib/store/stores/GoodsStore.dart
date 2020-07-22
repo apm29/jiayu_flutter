@@ -22,14 +22,19 @@ final goodsStore = DevToolsStore<GoodsStore>(
 class GoodsStore {
   GoodsDetail goodsDetail;
   PageController pageController = PageController();
+  Products currentProducts;
+  List<String> currentSpecification = [];
+
   GoodsStore();
 
-  Future<void> getGoodsDetail(BuildContext context,goodsId) async {
+  Future<void> getGoodsDetail(BuildContext context, goodsId) async {
     try {
       StoreProvider.of<JiaYuState>(context).dispatch(LoadingAction(true));
       BaseResp<GoodsDetail> resp = await Api.getGoodsDetail(goodsId);
-      if(resp.success){
+      if (resp.success) {
         goodsDetail = resp.data;
+        currentProducts = goodsDetail.products?.first;
+        currentSpecification = List.from(currentProducts?.specifications ?? []);
       }
     } catch (e) {
       print(e);
@@ -38,16 +43,52 @@ class GoodsStore {
     }
   }
 
-  Map<String,List<Specifications>>  get specificationsMap {
-    List<Specifications> array = goodsDetail?.specifications??[];
-    Map<String,List<Specifications>> map = Map();
+  Map<String, List<Specifications>> get specificationsMap {
+    List<Specifications> array = goodsDetail?.specifications ?? [];
+    Map<String, List<Specifications>> map = Map();
     array.forEach((element) {
-      if(map[element.specification]==null){
+      if (map[element.specification] == null) {
         map[element.specification] = [];
       }
       map[element.specification].add(element);
     });
     return map;
+  }
+
+  bool productMatch(Products currentProducts, List<String> specification) {
+    if (currentProducts == null) {
+      return false;
+    }
+    return arrayEqual(currentProducts.specifications, specification);
+  }
+
+  bool specificationMatch(Specifications specification) {
+    int keyIndex = specificationsMap.keys.toList().indexOf(specification
+        .specification);
+    if (currentProducts == null) {
+      return false;
+    }
+    return currentProducts.specifications[keyIndex] == specification.value;
+  }
+
+  bool arrayEqual(List<String> one, List<String> other) {
+    if (one.length != other.length) {
+      return false;
+    }
+    bool equal = true;
+    for (String element in one) {
+      if (element != other[one.indexOf(element)]) {
+        equal = false;
+      }
+    }
+    return equal;
+  }
+
+  void changeSpecification(Specifications e) {
+    int index = specificationsMap.keys.toList().indexOf(e.specification);
+    currentSpecification[index] = e.value;
+    currentProducts = goodsDetail.products
+        .firstWhere((element) => productMatch(element, currentSpecification));
   }
 }
 
@@ -58,12 +99,23 @@ GoodsStore indexReducer(GoodsStore state, action) {
 class GoodsDetailLoadAction {
   final BuildContext context;
   final dynamic goodsId;
-  GoodsDetailLoadAction(this.context,this.goodsId);
+
+  GoodsDetailLoadAction(this.context, this.goodsId);
+}
+
+class ChangeSpecificationAction {
+  final Specifications specifications;
+
+  ChangeSpecificationAction(this.specifications);
 }
 
 final appStateReducer = combineReducers<GoodsStore>(
   [
     TypedReducer<GoodsStore, GoodsDetailLoadAction>((state, action) {
+      return state;
+    }),
+    TypedReducer<GoodsStore, ChangeSpecificationAction>((state, action) {
+      state.changeSpecification(action.specifications);
       return state;
     }),
   ],
@@ -77,9 +129,8 @@ List<Middleware<GoodsStore>> createAppMiddleware() {
 
 onLoadGoods(Store<GoodsStore> store, GoodsDetailLoadAction action,
     NextDispatcher next) {
-  ()async{
-    await store.state.getGoodsDetail(action.context,action.goodsId);
+  () async {
+    await store.state.getGoodsDetail(action.context, action.goodsId);
     next(action);
   }();
-
 }

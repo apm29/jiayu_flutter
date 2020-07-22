@@ -7,6 +7,7 @@ import 'package:jiayu_flutter/components/scroll/ImagePlaceholder.dart';
 import 'package:jiayu_flutter/model/GoodsDetail.dart';
 import 'package:jiayu_flutter/pages/style/styles.dart';
 import 'package:jiayu_flutter/store/stores/GoodsStore.dart';
+import 'package:redux/src/store.dart';
 
 ///
 /// author : ciih
@@ -57,7 +58,7 @@ class GoodsDetailPage extends StatelessWidget {
                                     PageView.builder(
                                   controller: controller,
                                   itemBuilder: (context, index) =>
-                                      ImagePlaceholder(
+                                      ImageWithPlaceholder(
                                     src: goodsDetail.goods.gallery[index],
                                   ),
                                   itemCount: goodsDetail.goods.gallery.length,
@@ -121,8 +122,8 @@ class GoodsDetailPage extends StatelessWidget {
                               ),
                             ),
                             SubTitle('商品规格'),
-                            Text(goodsDetail.specifications.toString()),
                             SpecificationGrid(),
+                            SubTitle('商品详情'),
                             Html(data: goodsDetail.goods.detail),
                           ],
                         ),
@@ -288,42 +289,84 @@ class SpecificationGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-      child: StoreConnector<GoodsStore, Map<String, List<Specifications>>>(
-        converter: (store) => store.state.specificationsMap,
-        builder: (context, map) => Column(
-          children: map.keys
-              .map((e) => Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          e,
-                          style: goodsDetailBriefStyle,
-                        ),
-                      ),
-                      Expanded(
-                        child: Wrap(
-                          children: map[e]
-                              .map(
-                                (e) => Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  constraints: BoxConstraints(
-                                    minWidth: 80
-                                  ),
-                                  color: Colors.amber,
-                                  child: Text(
-                                    e.value,
-                                    style: goodsDetailBriefStyle.copyWith(
-                                        color: Colors.white),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      )
-                    ],
-                  ))
-              .toList(),
+      child: StoreBuilder<GoodsStore>(
+        builder: (context, store) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...store.state.specificationsMap.keys
+                .map((specificationKeys) =>
+                    buildSpecificationRow(specificationKeys, store))
+                .toList(),
+            Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 8,
+                ),
+                child: PriceTag(store.state.currentProducts?.price, '价格'),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 8,
+              ),
+              child: AttributeTag(Attributes(
+                  attribute: '库存',
+                  value: '${store.state.currentProducts?.number}')),
+            ),
+            ImageWithPlaceholder(
+              src: store.state.currentProducts?.url,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildSpecificationRow(
+      String specificationKeys, Store<GoodsStore> store) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            constraints: BoxConstraints(minWidth: 50),
+            child: Text(
+              specificationKeys,
+              style: goodsDetailBriefStyle,
+            ),
+          ),
+          Expanded(
+            child: Wrap(
+              children: store.state.specificationsMap[specificationKeys]
+                  .map(
+                    (e) => buildSpecificationValue(e, store),
+                  )
+                  .toList(),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  GestureDetector buildSpecificationValue(
+      Specifications e, Store<GoodsStore> store) {
+    return GestureDetector(
+      onTap: () {
+        store.dispatch(ChangeSpecificationAction(e));
+      },
+      child: Container(
+        padding: const EdgeInsets.all(8.0),
+        margin: EdgeInsets.only(right: 12),
+        constraints: BoxConstraints(minWidth: 80),
+        color: store.state.specificationMatch(e)
+            ? Colors.orangeAccent[100]
+            : Colors.grey[400],
+        child: Text(
+          e.value,
+          textAlign: TextAlign.center,
+          style: goodsDetailBriefStyle.copyWith(color: Colors.white),
         ),
       ),
     );

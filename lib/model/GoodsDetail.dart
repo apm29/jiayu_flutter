@@ -196,22 +196,22 @@ class Products {
       goodsId: asT<int>(jsonRes['goodsId']),
       id: asT<int>(jsonRes['id']),
       number: asT<int>(jsonRes['number']),
-      price: asT<int>(jsonRes['price']),
+      price: asT<double>(jsonRes['price']),
       specifications: specifications,
       updateTime: asT<String>(jsonRes['updateTime']),
       url: asT<String>(jsonRes['url']),
     );
   }
 
-  String addTime;
-  int deleted;
-  int goodsId;
-  int id;
-  int number;
-  int price;
-  List<String> specifications;
-  String updateTime;
-  String url;
+  final String addTime;
+  final int deleted;
+  final int goodsId;
+  final int id;
+  final int number;
+  final double price;
+  final List<String> specifications;
+  final String updateTime;
+  final String url;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
     'addTime': addTime,

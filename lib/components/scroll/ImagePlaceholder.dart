@@ -11,11 +11,11 @@ import 'package:jiayu_flutter/utils/utils.dart';
 /// description :
 ///
 
-class ImagePlaceholder extends StatelessWidget {
+class ImageWithPlaceholder extends StatelessWidget {
   final String src;
   final bool aliOss;
 
-  const ImagePlaceholder({Key key, this.src, this.aliOss = true})
+  const ImageWithPlaceholder({Key key, this.src, this.aliOss = true})
       : super(key: key);
 
   @override
@@ -29,13 +29,24 @@ class ImagePlaceholder extends StatelessWidget {
         }
         return TextLiquidFill(
           text: S.of(context).appName,
-          waveColor: Colors.grey[700],
-          boxBackgroundColor: Colors.grey,
+          waveColor: Colors.grey[500],
+          boxBackgroundColor: Colors.grey[400],
           textStyle: TextStyle(
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
           ),
           boxHeight: 250.0,
+        );
+      },
+      frameBuilder: (BuildContext context, Widget child, int frame, bool wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) {
+          return child;
+        }
+        return AnimatedOpacity(
+          child: child,
+          opacity: frame == null ? 0 : 1,
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeOut,
         );
       },
     );

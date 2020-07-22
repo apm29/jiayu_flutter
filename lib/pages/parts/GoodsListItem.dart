@@ -46,7 +46,7 @@ class GoodsListItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    ImagePlaceholder(
+                    ImageWithPlaceholder(
                       src: goods.picUrl,
                     ),
                     Padding(
