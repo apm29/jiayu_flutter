@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:jiayu_flutter/application/Application.dart';
 import 'package:jiayu_flutter/pages/SplashPage.dart';
 import 'package:jiayu_flutter/store/ReduxApp.dart';
+import 'package:sentry/sentry.dart';
 
+final SentryClient sentry = new SentryClient(dsn: "https://d374b2ab1e6c41619a3bef3fdde4133b@o424313.ingest.sentry.io/5356009");
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,4 +32,5 @@ customerReport(
     print(error);
     print(stackTrace);
   }
+  sentry.captureException(exception: error,stackTrace: stackTrace);
 }

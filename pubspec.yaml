@@ -63,6 +63,8 @@ dependencies:
   flutter_html: ^1.0.0-pre.1
   ## 微信sdk
   fluwx_no_pay: ^2.1.1
+  ## 错误上报
+  sentry: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jiayu_flutter/generated/l10n.dart';
+import 'package:jiayu_flutter/utils/utils.dart';
 
 ///
 /// author : apm29
@@ -124,51 +125,54 @@ class HomeAppbarDelegate extends SliverPersistentHeaderDelegate {
             top: searchTopTween.transform(percent),
             left: searchHorizontalTween.transform(percent),
             right: searchHorizontalTween.transform(percent),
-            child: Container(
-              height: searchHeightTween.transform(percent),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(_kCardRadius)),
-                  border: Border.all(
-                    color: searchBorderColorTween.transform(percent),
-                    width: 0.1,
-                  ),
-                  boxShadow: percent == 1
-                      ? []
-                      : [
-                          BoxShadow(
-                            color: searchBarColor,
-                            offset: Offset(
-                                0, searchShadowOffsetTween.transform(percent)),
-                            blurRadius:
-                                searchShadowBlurTween.transform(percent),
-                          ),
-                          BoxShadow(
-                            color: Colors.grey[100],
-                            offset: Offset(0,
-                                -searchShadowOffsetTween.transform(percent)),
-                            blurRadius:
-                                searchShadowBlurTween.transform(percent),
-                          ),
-                        ],
-                  color: Colors.white),
-              margin: EdgeInsets.only(
-                bottom: _kSearchBarMarginBottom,
-                top: searchTopMarginTween.transform(percent),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      'search',
-                      style: TextStyle(color: searchBarColor),
+            child: GestureDetector(
+              onTap: ()=>throw NotFoundException('666888'),
+              child: Container(
+                height: searchHeightTween.transform(percent),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(_kCardRadius)),
+                    border: Border.all(
+                      color: searchBorderColorTween.transform(percent),
+                      width: 0.1,
                     ),
-                  ),
-                  Icon(
-                    Icons.search,
-                    color: searchBarColor,
-                  )
-                ],
+                    boxShadow: percent == 1
+                        ? []
+                        : [
+                            BoxShadow(
+                              color: searchBarColor,
+                              offset: Offset(
+                                  0, searchShadowOffsetTween.transform(percent)),
+                              blurRadius:
+                                  searchShadowBlurTween.transform(percent),
+                            ),
+                            BoxShadow(
+                              color: Colors.grey[100],
+                              offset: Offset(0,
+                                  -searchShadowOffsetTween.transform(percent)),
+                              blurRadius:
+                                  searchShadowBlurTween.transform(percent),
+                            ),
+                          ],
+                    color: Colors.white),
+                margin: EdgeInsets.only(
+                  bottom: _kSearchBarMarginBottom,
+                  top: searchTopMarginTween.transform(percent),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        'search',
+                        style: TextStyle(color: searchBarColor),
+                      ),
+                    ),
+                    Icon(
+                      Icons.search,
+                      color: searchBarColor,
+                    )
+                  ],
+                ),
               ),
             ),
           )
