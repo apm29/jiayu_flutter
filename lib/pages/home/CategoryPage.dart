@@ -5,8 +5,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:jiayu_flutter/components/scroll/LoadMoreListener.dart';
 import 'package:jiayu_flutter/model/MallGoods.dart';
 import 'package:jiayu_flutter/pages/parts/GoodsListItem.dart';
+import 'package:jiayu_flutter/pages/parts/ListFooterWidget.dart';
 import 'package:jiayu_flutter/pages/style/styles.dart';
 import 'package:jiayu_flutter/store/actions.dart';
+import 'package:jiayu_flutter/store/stores.dart';
 import 'package:jiayu_flutter/store/stores/IndexStore.dart';
 import 'package:redux/redux.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -33,16 +35,25 @@ class CategoryPage extends StatelessWidget {
         child: Builder(
           builder: (context) => StoreBuilder<IndexStore>(
             onInitialBuild: (store) => refresh(context),
-            builder: (context, vm) => Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 100),
-                  child: vm.state.categoryList.isEmpty
-                      ? Center(
-                          child: CupertinoActivityIndicator(),
+            builder: (context, vm) => vm.state.categoryList.isEmpty ||
+                    vm.state.goodsList.isEmpty
+                ? Center(
+                    child: Row(
+                      children: <Widget>[
+                        CupertinoActivityIndicator(),
+                        RaisedButton(
+                          onPressed: () => refresh(context),
+                          child: Text('点击重试'),
                         )
-                      : ScrollablePositionedList.builder(
+                      ],
+                    ),
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxWidth: 100),
+                        child: ScrollablePositionedList.builder(
                           initialScrollIndex: 3,
                           itemScrollController: indexScrollController,
                           itemPositionsListener: indexPositionsListener,
@@ -57,13 +68,9 @@ class CategoryPage extends StatelessWidget {
                           ),
                           itemCount: vm.state.categoryList.length,
                         ),
-                ),
-                Expanded(
-                  child: vm.state.goodsList.isEmpty
-                      ? Center(
-                          child: CupertinoActivityIndicator(),
-                        )
-                      : LoadMoreListener(
+                      ),
+                      Expanded(
+                        child: LoadMoreListener(
                           onLoadMore: () {
                             loadMore(context);
                           },
@@ -84,8 +91,17 @@ class CategoryPage extends StatelessWidget {
                             return false;
                           },
                           child: ScrollablePositionedList.builder(
-                            itemCount: vm.state.goodsList.length,
+                            itemCount: vm.state.goodsList.length + 1,
                             itemBuilder: (context, index) {
+                              if(index == vm.state.goodsList.length){
+                                return StoreConnector<IndexStore, ListState>(
+                                  converter: (store) => store.state.listState,
+                                  builder: (context, state) => ListFooterWidget(
+                                    state: state,
+                                    onLoadMore: loadMore,
+                                  ),
+                                );
+                              }
                               return GoodsListItem(
                                 goods: vm.state.goodsList[index],
                               );
@@ -94,9 +110,9 @@ class CategoryPage extends StatelessWidget {
                             itemPositionsListener: itemPositionsListener,
                           ),
                         ),
-                ),
-              ],
-            ),
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),
@@ -164,4 +180,3 @@ class CategoryPage extends StatelessWidget {
         .dispatch(CategoryChangeAction(categoryId));
   }
 }
-

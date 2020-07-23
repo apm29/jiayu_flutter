@@ -18,7 +18,7 @@ class MinePage extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [mainColor, mainSecondaryColor.withAlpha(0x77)],
+                      colors: [mainColor, Colors.white.withAlpha(0x77)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter
                     ),
